@@ -1,0 +1,155 @@
+import sys
+
+
+def exchange_index(numbers: list, position: int):
+    if position > len(numbers) - 1 or position < 0:
+        return "Invalid index"
+    else:
+        first_half_of_list = numbers[:position + 1]
+        second_half_of_list = numbers[position + 1:]
+        return second_half_of_list + first_half_of_list
+
+
+def max_even(numbers: list):
+    max_even_num = -sys.maxsize
+    even_position = False
+    for count, value in enumerate(numbers):
+        if value % 2 == 0 and value >= max_even_num:
+            max_even_num = value
+            even_position = count
+    if not even_position is False:
+        return even_position
+    else:
+        return "No matches"
+
+
+def max_odd(numbers: list):
+    max_odd_num = -sys.maxsize
+    odd_position = False
+    for count, value in enumerate(numbers):
+        if not value % 2 == 0 and value >= max_odd_num:
+            max_odd_num = value
+            odd_position = count
+    if not odd_position is False:
+        return odd_position
+    else:
+        return "No matches"
+
+
+def min_even(numbers: list):
+    min_even_num = sys.maxsize
+    even_position = False
+    for count, value in enumerate(numbers):
+        if value % 2 == 0 and value <= min_even_num:
+            min_even_num = value
+            even_position = count
+    if not even_position is False:
+        return even_position
+    else:
+        return "No matches"
+
+
+def min_odd(numbers: list):
+    min_odd_num = sys.maxsize
+    odd_position = False
+    for count, value in enumerate(numbers):
+        if not value % 2 == 0 and value <= min_odd_num:
+            min_odd_num = value
+            odd_position = count
+    if not odd_position is False:
+        return odd_position
+    else:
+        return "No matches"
+
+
+def first_count_even(numbers: list, count: int):
+    count_of_evens = []
+    if not len(numbers) >= count > 0:
+        return "Invalid count"
+    else:
+        for i in numbers:
+            if i % 2 == 0 and count > 0:
+                count_of_evens.append(i)
+                count -= 1
+        return count_of_evens
+
+
+def first_count_odd(numbers: list, count: int):
+    count_of_odds = []
+    if not len(numbers) >= count > 0:
+        return "Invalid count"
+    else:
+        for i in numbers:
+            if not i % 2 == 0 and count > 0:
+                count_of_odds.append(i)
+                count -= 1
+        return count_of_odds
+
+
+def last_count_even(numbers: list, count: int):
+    count_of_evens = []
+    if not len(numbers) >= count > 0:
+        return "Invalid count"
+    else:
+        for i in numbers[::-1]:
+            if i % 2 == 0 and count > 0:
+                count_of_evens.append(i)
+                count -= 1
+        return count_of_evens[::-1]
+
+
+def last_count_odd(numbers: list, count: int):
+    count_of_odds = []
+    if not len(numbers) >= count > 0:
+        return "Invalid count"
+    else:
+        for i in numbers[::-1]:
+            if not i % 2 == 0 and count > 0:
+                count_of_odds.append(i)
+                count -= 1
+        return count_of_odds[::-1]
+
+
+numbers_as_string = input().split()
+
+number_as_ints = [int(i) for i in numbers_as_string]
+
+action_type = ""
+
+while not action_type == "end":
+    action = input().split()
+    action_type = action[0]
+    if action_type == "exchange":
+        action_filter = action[1]
+        result_from_exchange = exchange_index(number_as_ints, int(action_filter))
+        if not result_from_exchange == "Invalid index":
+            number_as_ints = exchange_index(number_as_ints, int(action_filter))
+        else:
+            print("Invalid index")
+    elif action_type == "max":
+        action_filter = action[1]
+        if action_filter == "even":
+            print(max_even(number_as_ints))
+        elif action_filter == "odd":
+            print(max_odd(number_as_ints))
+    elif action_type == "min":
+        action_filter = action[1]
+        if action_filter == "even":
+            print(min_even(number_as_ints))
+        elif action_filter == "odd":
+            print(min_odd(number_as_ints))
+    elif action_type == "first":
+        action_filter = action[1]
+        action_definition = action[2]
+        if action_definition == "even":
+            print(first_count_even(number_as_ints, int(action_filter)))
+        elif action_definition == "odd":
+            print(first_count_odd(number_as_ints, int(action_filter)))
+    elif action_type == "last":
+        action_filter = action[1]
+        action_definition = action[2]
+        if action_definition == "even":
+            print(last_count_even(number_as_ints, int(action_filter)))
+        elif action_definition == "odd":
+            print(last_count_odd(number_as_ints, int(action_filter)))
+print(number_as_ints)
